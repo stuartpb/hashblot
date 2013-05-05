@@ -1,0 +1,4 @@
+hashblot
+========
+
+Expressive hash visualization
