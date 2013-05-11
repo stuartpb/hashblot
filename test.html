@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>HashBlot hash visualization</title>
+    <script src="hashblot.js"></script>
     <script src="sha1.js"></script>
   </head>
   <body>
@@ -11,26 +12,9 @@
     </svg>
     <input id="entryfield" type="text">
     <script>
-      /*global jsSHA*/
+      /*global jsSHA hashblot*/
       
-      //Fun, kinda angle-y. Tends to make a lot of birds.
-      function fiveQuadraticsPath (content){
-        var hash = new jsSHA(content,'TEXT').getHash('SHA-1','HEX');
-        
-        var pathNodes = [];
-        pathNodes[0] = 'M '+parseInt(hash.slice(36,38),16)
-          +','+parseInt(hash.slice(38,40),16);
-        for(var i = 1; i<5; i++) {
-          var base = (i-1)*8;
-          pathNodes[i]='Q '+parseInt(hash.slice(base,base+2),16)
-            +','+parseInt(hash.slice(base+2,base+4),16)
-            +' '+parseInt(hash.slice(base+4,base+6),16)
-            +','+parseInt(hash.slice(base+6,base+8),16);
-        }
-        return pathNodes.join(' ');
-      }
-      
-      //Sucks.
+      //ignore me
       function tenQuadraticsPath (content){
         var hash = new jsSHA(content,'TEXT').getHash('SHA-1','HEX');
         
@@ -50,8 +34,8 @@
       }
       
       document.getElementById('entryfield').addEventListener('keyup',function(evt){
-        document.getElementById('blotpath')
-          .setAttribute('d',fiveQuadraticsPath(evt.target.value));
+        document.getElementById('blotpath').setAttribute('d', hashblot(
+          new jsSHA(evt.target.value,'TEXT').getHash('SHA-1','HEX')));
       });
     </script>
   </body>
