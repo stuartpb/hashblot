@@ -2,15 +2,60 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>HashBlot hash visualization</title>
+    <title>hashblot</title>
     <script src="scripts/sha1.js"></script>
     <script src="hashblot.js"></script>
+    <link href="images/favicon.png" sizes="16x16" rel="icon" type="image/png">
+    <link href="images/favicon@2x.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="images/favicon@4x.png" sizes="64x64" rel="icon" type="image/png">
+    <link href='//fonts.googleapis.com/css?family=Abril+Fatface' rel='stylesheet' type='text/css'>
+    <style>
+      html, body {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        text-align: center;
+        font-family: sans-serif;
+      }
+      
+      header {
+        width: 60%;
+        padding: 2vh 0 0;
+        margin: 0 auto;
+        text-align: left;
+      }
+      h1 {
+        font-size: 5vh;
+        font-family: Abril Fatface, sans-serif;
+        font-weight: normal;
+        margin:0;
+      }
+      
+      #blotout {
+        height: 60vh;
+        width: 60vh;
+        margin: 5vh auto;
+        box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
+      }
+      
+      #entryfield {
+        width: 60%;
+        font-size: 5vh;
+        margin: auto;
+      }
+    </style>
   </head>
   <body>
-    <svg id="blotout" viewBox = '-1 -1 257 257'>
-      <path id='blotpath'></path>
-    </svg>
-    <input id="entryfield" type="text">
+    <header>
+      <h1>hashblot</h1>
+    </header>
+    <div class="ornateframe">
+      <svg id="blotout" viewBox = '-1 -1 257 257'>
+        <path id='blotpath'></path>
+      </svg>
+    </div>
+    <div>
+      <input id="entryfield" type="text" placeholder="Type some text here">
+    </div>
     <script>
       /*global hashblot*/
       
