@@ -33,14 +33,14 @@
       #blotout {
         height: 60vh;
         width: 60vh;
-        margin: 5vh auto;
+        margin: 5vh auto 2.5vh;
         box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
       }
       
       #entryfield {
         width: 60%;
         font-size: 5vh;
-        margin: auto;
+        margin: 2.5vh auto 0;
       }
     </style>
   </head>
@@ -54,15 +54,37 @@
       </svg>
     </div>
     <div>
+      <a href='' id="linktothis">Link</a>
+    </div>
+    <div>
       <input id="entryfield" type="text" placeholder="Type some text here">
     </div>
     <script>
       /*global hashblot*/
+      function encode(str) {
+        return encodeURIComponent(str).replace(/%20/g,'+')}
+      function decode(str) {
+        return decodeURIComponent(str.replace(/\+/g,' '))}
       
-      document.getElementById('entryfield').addEventListener('keyup',function(evt){
+      function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
-          hashblot.sha1qp(evt.target.value));
-      });
+        phrase ? hashblot.sha1qp(phrase) : '');
+        document.getElementById('linktothis').href = phrase ?
+          '#!' + encode(phrase) : '';
+        document.getElementById('entryfield').value = phrase;
+      }
+      
+      document.getElementById('entryfield').addEventListener('keyup',
+        function(evt){updateFromPhrase(evt.target.value)});
+      
+      function updateFromHash() {
+        updateFromPhrase((location.hash && location.hash.substr(1,1) == '!') ?
+          decode(location.hash.slice(2)) : '');
+      }
+      
+      window.addEventListener('hashchange',updateFromHash);
+      
+      updateFromHash();
     </script>
   </body>
 </html>
