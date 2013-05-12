@@ -71,15 +71,16 @@
         phrase ? hashblot.sha1qp(phrase) : '');
         document.getElementById('linktothis').href = phrase ?
           '#!' + encode(phrase) : '';
-        document.getElementById('entryfield').value = phrase;
       }
       
       document.getElementById('entryfield').addEventListener('keyup',
         function(evt){updateFromPhrase(evt.target.value)});
       
       function updateFromHash() {
-        updateFromPhrase((location.hash && location.hash.substr(1,1) == '!') ?
-          decode(location.hash.slice(2)) : '');
+        var phrase = (location.hash && location.hash.substr(1,1) == '!') ?
+          decode(location.hash.slice(2)) : '';
+        updateFromPhrase(phrase);
+        document.getElementById('entryfield').value = phrase;
       }
       
       window.addEventListener('hashchange',updateFromHash);
