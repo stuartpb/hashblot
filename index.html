@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HashBlot hash visualization</title>
+    <script src="scripts/sha1.js"></script>
+    <script src="hashblot.js"></script>
+  </head>
+  <body>
+    <svg id="blotout" viewBox = '-1 -1 257 257'>
+      <path id='blotpath'></path>
+    </svg>
+    <input id="entryfield" type="text">
+    <script>
+      /*global hashblot*/
+      
+      document.getElementById('entryfield').addEventListener('keyup',function(evt){
+        document.getElementById('blotpath').setAttribute('d',
+          hashblot.sha1qp(evt.target.value));
+      });
+    </script>
+  </body>
+</html>

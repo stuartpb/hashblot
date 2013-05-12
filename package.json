@@ -1,0 +1,19 @@
+{
+  "name": "hashblot",
+  "version": "0.1.0",
+  "description": "Functions for hash visualization.",
+  "main": "hashblot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stuartpb/hashblot.git"
+  },
+  "keywords": [
+    "hash",
+    "visualization"
+  ],
+  "author": "Stuart P. Bentley",
+  "license": "MIT"
+}
