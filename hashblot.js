@@ -21,21 +21,18 @@ if(typeof module != "undefined") {
   };
 }
 
+function pH(s){return parseInt(s,16)}
+
+var qwords = new RegExp(new Array(5).join("([0-9a-fA-F][0-9a-fA-F])"),'g');
+
 function qp (hash) {
-  var qwords = hash.length / 8;
-  var pathNodes = [];
-  pathNodes[0] =
-    'M' + parseInt(hash.slice(-4, -2), 16) +
-    ',' + parseInt(hash.slice(-2    ), 16);
-  for(var i = 0; i < qwords; i++) {
-    var base = i * 8;
-    pathNodes[i+1] =
-      'Q' + parseInt(hash.slice(base  ,base+2), 16) +
-      ',' + parseInt(hash.slice(base+2,base+4), 16) +
-      ' ' + parseInt(hash.slice(base+4,base+6), 16) +
-      ',' + parseInt(hash.slice(base+6,base+8), 16) ;
-  }
-  return pathNodes.join('');
+  if(typeof hash != "string" || !hash.match(/^[0-9a-fA-F]*$/))
+    throw new Error("input must be a string of hexadecimal characters");
+  if(hash.length / 8 % 1 != 0)
+    throw new Error("length of input must be divisible by 8");
+  return hash.replace(qwords, function(m,xc,yc,x2,y2) {
+      return 'Q' + pH(xc) + ',' + pH(yc) + ' ' + pH(x2) + ',' + pH(y2)})
+    .replace(/^.*?(\d*,\d*)$/,"M$1$&");
 }
 
 hashblot.qp = qp;
