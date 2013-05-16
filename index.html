@@ -57,7 +57,8 @@
   </head>
   <body>
     <header>
-      <a href="https://github.com/stuartpb/hashblot/wiki/About" id="aboutlink">About</a>
+      <a href="https://github.com/stuartpb/hashblot/wiki/About"
+        id="aboutlink">About</a>
       <h1>hashblot</h1>
     </header>
     <div class="ornateframe">
@@ -69,7 +70,8 @@
       <a href='' id="linktothis">Link</a>
     </div>
     <div>
-      <input id="entryfield" type="text" placeholder="Type some text here">
+      <input id="entryfield" type="text" autofocus
+        placeholder="Type some text here">
     </div>
     <script>
       /*global hashblot*/
@@ -88,16 +90,25 @@
       document.getElementById('entryfield').addEventListener('keyup',
         function(evt){updateFromPhrase(evt.target.value)});
       
-      function updateFromHash() {
-        var phrase = (location.hash && location.hash.substr(1,1) == '!') ?
-          decode(location.hash.slice(2)) : '';
+      function initPage() {
+        var phrase = localStorage.getItem('stashPhrase') ||
+          ((location.hash && location.hash.substr(1,1) == '!') ?
+            decode(location.hash.slice(2)) : '');
         updateFromPhrase(phrase);
         document.getElementById('entryfield').value = phrase;
+        if(localStorage.getItem('stashPhrase'))
+          localStorage.removeItem('stashPhrase');
       }
       
-      window.addEventListener('hashchange',updateFromHash);
+      window.addEventListener('hashchange',initPage);
       
-      updateFromHash();
+      applicationCache.addEventListener('updateready',function(evt){
+        localStorage.setItem('stashPhrase',
+          document.getElementById('entryfield').value);
+        location.reload();
+      });
+      
+      initPage();
     </script>
   </body>
 </html>
