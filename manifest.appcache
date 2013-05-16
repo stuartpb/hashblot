@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Thu May 16 03:42:09 PDT 2013
+# Thu May 16 13:53:09 PDT 2013
 
 CACHE:
 /
@@ -8,6 +8,7 @@ hashblot.js
 images/favicon.png
 images/favicon@2x.png
 images/favicon@4x.png
+images/frame.jpg
 
 # allow remote resources, like the header font from Google Webfonts
 NETWORK:

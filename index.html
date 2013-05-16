@@ -17,6 +17,13 @@
         font-family: sans-serif;
       }
       
+      body {
+        background-image: url(images/curtain3.png),
+          url(images/curtain2.png),
+          url(images/curtain1.jpg);
+        background-size: auto 100%;
+      }
+      
       header {
         width: 60%;
         padding: 2vh 0 0;
@@ -37,6 +44,7 @@
         width: 60vmin;
         margin: 5vh auto 2.5vh;
         box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
+        background-color: white;
         fill-rule: nonzero;
       }
       
@@ -53,6 +61,11 @@
         right: 0;
       }
       
+      .ornateframe {
+        border-image: url("images/frame.jpg") 147 145 147 143;
+        border-width: 4em;
+      }
+      
     </style>
   </head>
   <body>
@@ -61,8 +74,8 @@
         id="aboutlink">About</a>
       <h1>hashblot</h1>
     </header>
-    <div class="ornateframe">
-      <svg id="blotout" viewBox = '-1 -1 257 257'>
+    <div>
+      <svg id="blotout" class="ornateframe" viewBox = '-1 -1 257 257'>
         <path id='blotpath'></path>
       </svg>
     </div>
