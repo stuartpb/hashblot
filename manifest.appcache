@@ -1,7 +1,7 @@
 CACHE MANIFEST
-# Wed May 15 16:02:32 PDT 2013
+# Wed May 15 23:22:07 PDT 2013
 
-CACHE
+CACHE:
 index.html
 scripts/sha1.js
 images/favicon.png
@@ -9,7 +9,7 @@ favicon@2x.png
 favicon@4x.png
 
 # allow remote resources, like the header font from Google Webfonts
-NETWORK
+NETWORK:
 *
 http://*
 https://*
