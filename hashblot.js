@@ -27,15 +27,15 @@ function qp (hash) {
   pathNodes[0] =
     'M' + parseInt(hash.slice(-4, -2), 16) +
     ',' + parseInt(hash.slice(-2    ), 16);
-  for(var i = 1; i < qwords; i++) {
-    var base = (i-1) * 8;
-    pathNodes[i] =
+  for(var i = 0; i < qwords; i++) {
+    var base = i * 8;
+    pathNodes[i+1] =
       'Q' + parseInt(hash.slice(base  ,base+2), 16) +
       ',' + parseInt(hash.slice(base+2,base+4), 16) +
       ' ' + parseInt(hash.slice(base+4,base+6), 16) +
       ',' + parseInt(hash.slice(base+6,base+8), 16) ;
   }
-  return pathNodes.join(' ');
+  return pathNodes.join('');
 }
 
 hashblot.qp = qp;
