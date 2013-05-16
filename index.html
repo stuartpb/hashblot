@@ -22,7 +22,9 @@
         padding: 2vh 0 0;
         margin: 0 auto;
         text-align: left;
+        position: relative;
       }
+      
       h1 {
         font-size: 5vh;
         font-family: Abril Fatface, sans-serif;
@@ -31,10 +33,11 @@
       }
       
       #blotout {
-        height: 60vh;
-        width: 60vh;
+        height: 60vmin;
+        width: 60vmin;
         margin: 5vh auto 2.5vh;
         box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
+        fill-rule: nonzero;
       }
       
       #entryfield {
@@ -42,10 +45,19 @@
         font-size: 5vh;
         margin: 2.5vh auto 0;
       }
+      
+      #aboutlink {
+        position: absolute;
+        font-size: 4vh;
+        top: 25%;
+        right: 0;
+      }
+      
     </style>
   </head>
   <body>
     <header>
+      <a href="https://github.com/stuartpb/hashblot/wiki/About" id="aboutlink">About</a>
       <h1>hashblot</h1>
     </header>
     <div class="ornateframe">

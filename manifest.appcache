@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# Wed May 15 23:24:43 PDT 2013
+# Thu May 16 03:37:09 PDT 2013
 
 CACHE:
-index.html
+/
 scripts/sha1.js
+hashblot.js
 images/favicon.png
 images/favicon@2x.png
 images/favicon@4x.png
