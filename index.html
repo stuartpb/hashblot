@@ -91,19 +91,19 @@
         function(evt){updateFromPhrase(evt.target.value)});
       
       function initPage() {
-        var phrase = localStorage.getItem('stashPhrase') ||
+        var phrase = sessionStorage.getItem('stashPhrase') ||
           ((location.hash && location.hash.substr(1,1) == '!') ?
             decode(location.hash.slice(2)) : '');
         updateFromPhrase(phrase);
         document.getElementById('entryfield').value = phrase;
-        if(localStorage.getItem('stashPhrase'))
-          localStorage.removeItem('stashPhrase');
+        if(sessionStorage.getItem('stashPhrase'))
+          sessionStorage.removeItem('stashPhrase');
       }
       
       window.addEventListener('hashchange',initPage);
       
       applicationCache.addEventListener('updateready',function(evt){
-        localStorage.setItem('stashPhrase',
+        sessionStorage.setItem('stashPhrase',
           document.getElementById('entryfield').value);
         location.reload();
       });
