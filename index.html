@@ -16,7 +16,7 @@
         text-align: center;
         font-family: sans-serif;
       }
-      
+
       header {
         width: 60%;
         padding: 2vh 0 0;
@@ -24,14 +24,14 @@
         text-align: left;
         position: relative;
       }
-      
+
       h1 {
         font-size: 5vh;
         font-family: Abril Fatface, sans-serif;
         font-weight: normal;
         margin:0;
       }
-      
+
       #blotout {
         height: 60vmin;
         width: 60vmin;
@@ -39,20 +39,20 @@
         box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
         fill-rule: nonzero;
       }
-      
+
       #entryfield {
         width: 60%;
         font-size: 5vh;
         margin: 2.5vh auto 0;
       }
-      
+
       #aboutlink {
         position: absolute;
         font-size: 4vh;
         top: 25%;
         right: 0;
       }
-      
+
     </style>
   </head>
   <body>
@@ -79,35 +79,87 @@
         return encodeURIComponent(str).replace(/%20/g,'+')}
       function decode(str) {
         return decodeURIComponent(str.replace(/\+/g,' '))}
-      
+
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
         phrase ? hashblot.sha1qp(phrase) : '');
         document.getElementById('linktothis').href = phrase ?
           '#!' + encode(phrase) : '';
       }
-      
+
       document.getElementById('entryfield').addEventListener('keyup',
         function(evt){updateFromPhrase(evt.target.value)});
-      
-      function initPage() {
+
+      // Sets the page's phrase to either a stashed state (from a pre-updated
+      // page state), or the phrase specified by the page's hashbang (or, if
+      // the hash isn't banged, restore the initial empty state).
+      function restorePhrase(){
         var phrase = sessionStorage.getItem('stashPhrase') ||
           ((location.hash && location.hash.substr(1,1) == '!') ?
             decode(location.hash.slice(2)) : '');
+
         updateFromPhrase(phrase);
         document.getElementById('entryfield').value = phrase;
-        if(sessionStorage.getItem('stashPhrase'))
+
+        if (sessionStorage.getItem('stashPhrase')) {
           sessionStorage.removeItem('stashPhrase');
+        }
       }
-      
-      window.addEventListener('hashchange',initPage);
-      
-      applicationCache.addEventListener('updateready',function(evt){
+
+      // Restores a previously stashed state's active element (the position of
+      // focus / the text insertion caret).
+      function restoreStashedActiveElement() {
+        if (sessionStorage.getItem('stashActiveId')) {
+          document.activeElement = document.getElementById(
+            sessionStorage.getItem('stashActiveId'));
+
+          if (sessionStorage.getItem('stashSelectionStart')) {
+            document.activeElement.selectionStart =
+              sessionStorage.getItem('stashSelectionStart');
+            document.activeElement.selectionEnd =
+              sessionStorage.getItem('stashSelectionEnd');
+
+            sessionStorage.removeItem('stashSelectionStart');
+            sessionStorage.removeItem('stashSelectionEnd');
+          }
+
+          sessionStorage.removeItem('stashActiveId');
+        }
+      }
+
+      function initPage() {
+        restorePhrase();
+        restoreStashedActiveElement();
+      }
+
+      window.addEventListener('hashchange',restorePhrase);
+
+      // Stash the page state so we can seamlessly transition to a new
+      // version when an update is ready
+      function stashState() {
         sessionStorage.setItem('stashPhrase',
           document.getElementById('entryfield').value);
+
+        // If focus is currently on the text entry field
+        if (document.activeElement != document.body
+          && document.activeElement.id) {
+
+          sessionStorage.setItem('stashActiveId',
+            document.activeElement.id);
+          if (document.activeElement.selectionStart !== undefined) {
+            sessionStorage.setItem('stashSelectionStart',
+              document.activeElement.selectionStart);
+            sessionStorage.setItem('stashSelectionEnd',
+              document.activeElement.selectionEnd);
+          }
+        }
+      }
+
+      applicationCache.addEventListener('updateready',function (evt) {
+        stashState();
         location.reload();
       });
-      
+
       initPage();
     </script>
   </body>
