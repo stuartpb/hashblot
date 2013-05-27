@@ -1,16 +1,10 @@
 CACHE MANIFEST
 # Mon May 27 07:37:04 PDT 2013
 
-CACHE:
 /
 scripts/sha1.js
 hashblot.js
 images/favicon.png
 images/favicon@2x.png
 images/favicon@4x.png
-
-# allow remote resources, like the header font from Google Webfonts
-NETWORK:
-*
-http://*
-https://*
+//fonts.googleapis.com/css?family=Abril+Fatface
