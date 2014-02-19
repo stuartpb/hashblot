@@ -104,7 +104,7 @@ THE SOFTWARE.
 
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
-        phrase ? hashblot.sha1qp(phrase) : '');
+        phrase ? hashblot.sha1qp(phrase) : 'M 0 0');
         document.getElementById('linktothis').href = phrase ?
           '#!' + encode(phrase) : '';
       }
