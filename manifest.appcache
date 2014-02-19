@@ -10,3 +10,6 @@ images/favicon@2x.png
 images/favicon@4x.png
 //fonts.googleapis.com/css?family=Abril+Fatface
 
+# allow remote resources, like the header font from Google Webfonts
+NETWORK:
+*
