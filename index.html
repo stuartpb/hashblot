@@ -108,7 +108,7 @@ THE SOFTWARE.
           '#!' + encode(phrase) : '';
       }
 
-      document.getElementById('entryfield').addEventListener('keyup',
+      document.getElementById('entryfield').addEventListener('input',
         function(evt){updateFromPhrase(evt.target.value)});
 
       // Sets the page's phrase to either a stashed state (from a pre-updated
