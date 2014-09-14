@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <!--
-http://hashblot.com/index.html Copyright (c) 2013 Stuart P. Bentley
+http://hashblot.com/index.html Copyright (c) 2014 Stuart P. Bentley
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 -->
     <title>hashblot</title>
-    <script src="scripts/sha1.js"></script>
+    <script src="vendor/rusha.min.js"></script>
     <script src="hashblot.js"></script>
     <link href="images/favicon.png" sizes="16x16" rel="icon" type="image/png">
     <link href="images/favicon@2x.png" sizes="32x32" rel="icon" type="image/png">
@@ -37,7 +37,6 @@ THE SOFTWARE.
         text-align: center;
         font-family: sans-serif;
       }
-
       header {
         width: 60%;
         padding: 2vh 0 0;
@@ -45,14 +44,12 @@ THE SOFTWARE.
         text-align: left;
         position: relative;
       }
-
       h1 {
         font-size: 5vh;
         font-family: Abril Fatface, sans-serif;
         font-weight: normal;
         margin:0;
       }
-
       #blotout {
         height: 60vmin;
         width: 60vmin;
@@ -61,20 +58,17 @@ THE SOFTWARE.
         fill-rule: nonzero;
         background-color: white;
       }
-
       #entryfield {
         width: 60%;
         font-size: 5vh;
         margin: 2.5vh auto 0;
       }
-
       #aboutlink {
         position: absolute;
         font-size: 4vh;
         top: 25%;
         right: 0;
       }
-
     </style>
   </head>
   <body>
@@ -104,7 +98,7 @@ THE SOFTWARE.
 
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
-        phrase ? hashblot.sha1qp(phrase) : 'M 0 0');
+        phrase ? hashblot.sha1qpd(phrase) : 'M 0 0');
         document.getElementById('linktothis').href = phrase ?
           '#!' + encode(phrase) : '';
       }

@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# Sun Sep 14 11:40:45 UTC 2014
+# Sun Sep 14 16:23:38 UTC 2014
 
 CACHE:
 /
-scripts/sha1.js
+vendor/rusha.min.js
 hashblot.js
 images/favicon.png
 images/favicon@2x.png
