@@ -91,16 +91,12 @@ THE SOFTWARE.
     </div>
     <script>
       /*global hashblot*/
-      function encode(str) {
-        return encodeURIComponent(str).replace(/%20/g,'+')}
-      function decode(str) {
-        return decodeURIComponent(str.replace(/\+/g,' '))}
 
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
         phrase ? hashblot.sha1qpd(phrase) : 'M 0 0');
         document.getElementById('linktothis').href = phrase ?
-          '#!' + encode(phrase) : '';
+          '#!' + encodeURIComponent(phrase) : '';
       }
 
       document.getElementById('entryfield').addEventListener('input',
@@ -112,7 +108,7 @@ THE SOFTWARE.
       function restorePhrase(){
         var phrase = sessionStorage.getItem('stashPhrase') ||
           ((location.hash && location.hash.substr(1,1) == '!') ?
-            decode(location.hash.slice(2)) : '');
+            decodeURIComponent(location.hash.slice(2)) : '');
 
         updateFromPhrase(phrase);
         document.getElementById('entryfield').value = phrase;
