@@ -115,7 +115,7 @@ function qpd (hash) {
     throw new Error("input must be an array of values");
   if(hash.length % 4 != 0)
     throw new Error("length of input must be divisible by 4");
-  return 'M' + hash[hash.length-1] + ',' + hash[hash.length] +
+  return 'M' + hash[hash.length-2] + ',' + hash[hash.length-1] +
     'Q'+ hash.join();
 }
 
@@ -125,7 +125,7 @@ function qpath2d (hash, ctx) {
   if(hash.length % 4 != 0)
     throw new Error("length of input must be divisible by 4");
   ctx = ctx || new Path2D();
-  ctx.moveTo(hash[hash.length-1], hash[hash.length]);
+  ctx.moveTo(hash[hash.length-2], hash[hash.length-1]);
   for(var i=0; i < hash.length; i+=4) {
     ctx.quadraticCurveTo(hash[i], hash[i+1], hash[i+2], hash[i+3]);
   }
