@@ -83,7 +83,8 @@ THE SOFTWARE.
       </svg>
     </div>
     <div>
-      <a href="" id="linktothis">Link</a>
+      <a href="" id="self-link">Link</a>
+      <a href="" id="png-link">PNG image</a>
     </div>
     <div>
       <input id="entryfield" type="text" autofocus
@@ -95,8 +96,11 @@ THE SOFTWARE.
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
         phrase ? hashblot.sha1qpd(phrase) : 'M 0 0');
-        document.getElementById('linktothis').href = phrase ?
+        document.getElementById('self-link').href = phrase ?
           '#!' + encodeURIComponent(phrase) : '';
+        document.getElementById('png-link').href =
+          '//images.hashblot.com/sha1q/800/'
+            + encodeURIComponent(phrase) + '.png';
       }
 
       document.getElementById('entryfield').addEventListener('input',
