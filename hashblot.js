@@ -23,7 +23,7 @@ THE SOFTWARE.
 
 "use strict";
 
-var hashblot = {};
+var hashblot = {pd:{}, path2d:{}};
 var sha1;
 
 function charCodes(s) {
@@ -98,7 +98,7 @@ if(typeof module != "undefined") {
   module.exports = hashblot;
   var crypto = require('crypto');
   sha1 = function sha1Node(content) {
-    return crypto.createHash('sha1').update(content,'utf8').digest('hex');
+    return crypto.createHash('sha1').update(content, 'utf8').digest('hex');
   };
 } else {
   window.hashblot = hashblot;
@@ -133,9 +133,11 @@ function qpath2d (hash, ctx) {
 }
 
 hashblot.qpd = qpd;
+hashblot.pd.q = qpd;
 hashblot.sha1qpd = function(content) {return qpd(sha1(content))};
 hashblot.qpath2d = qpath2d;
-hashblot.sha1qpath2d = function(content,ctx) {
-  return qpath2d(sha1(content),ctx)};
+hashblot.path2d.q = qpath2d;
+hashblot.sha1qpath2d = function(content, ctx) {
+  return qpath2d(sha1(content), ctx)};
 hashblot.bindSha1 = bindSha1;
 })();
