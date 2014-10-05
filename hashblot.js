@@ -98,7 +98,8 @@ if(typeof module != "undefined") {
   module.exports = hashblot;
   var crypto = require('crypto');
   sha1 = function sha1Node(content) {
-    return crypto.createHash('sha1').update(content, 'utf8').digest('hex');
+    return Array.apply([],
+      crypto.createHash('sha1').update(content, 'utf8').digest());
   };
 } else {
   window.hashblot = hashblot;
