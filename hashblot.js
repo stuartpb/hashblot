@@ -140,5 +140,6 @@ hashblot.qpath2d = qpath2d;
 hashblot.path2d.q = qpath2d;
 hashblot.sha1qpath2d = function(content, ctx) {
   return qpath2d(sha1(content), ctx)};
+hashblot.hexBytes = hexBytes;
 hashblot.bindSha1 = bindSha1;
 })();
