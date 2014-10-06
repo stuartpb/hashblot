@@ -26,15 +26,6 @@ THE SOFTWARE.
 var hashblot = {pd:{}, path2d:{}};
 var sha1;
 
-function charCodes(s) {
-  var l = s.length;
-  var a = new Array(l);
-  for (var i = 0; i < l; ++i) {
-    a[i] = s.charCodeAt(i);
-  }
-  return a;
-}
-
 function hexBytes(s) {
   var l = s.length / 2;
   var a = new Array(l);
@@ -45,53 +36,7 @@ function hexBytes(s) {
 }
 
 function bindSha1(f) {
-  /*global Rusha hex_sha1 jsSHA sjcl forge CryptoJS*/
-  if (f) {
-    sha1 = f;
-  } else if (typeof(Rusha) != "undefined") {
-    var rusha = new Rusha();
-    sha1 = function sha1Rusha(content) {
-      return Array.apply([], new Uint8Array(
-        rusha.rawDigest(unescape(encodeURIComponent(content))).buffer));
-    };
-  } else if (typeof(forge) != "undefined") {
-    sha1 = function sha1Forge(content) {
-      return charCodes(forge.md.sha1.create()
-        .update(unescape(encodeURIComponent(content))).digest().bytes());
-    };
-  } else if (typeof(sjcl) != "undefined" && sjcl.hash.sha1) {
-    sha1 = function sha1Sjcl(content) {
-      var result = sjcl.hash.sha1.hash(unescape(encodeURIComponent(content)));
-      var a = new Array(20);
-      for (var i = 0; i < 5; ++i) {
-        a[i*4] = result[i] & 0xFF;
-        a[i*4+1] = result[i] >> 8 & 0xFF;
-        a[i*4+2] = result[i] >> 16 & 0xFF;
-        a[i*4+3] = result[i] >> 24;
-      }
-      return a;
-    };
-  } else if (typeof(jsSHA) != "undefined") {
-    sha1 = function sha1JsSHA(content) {
-      return hexBytes(new jsSHA(unescape(encodeURIComponent(content)),'TEXT')
-        .getHash('SHA-1','HEX'));
-    };
-  } else if (typeof(hex_sha1) != "undefined") {
-    sha1 = function sha1Paj(content) {
-      return hexBytes(hex_sha1(content));
-    };
-  } else if (typeof(CryptoJS) != "undefined") {
-    sha1 = function sha1CryptoJS(content) {
-      return hexBytes(CryptoJS.SHA1(unescape(encodeURIComponent(content))));
-    };
-  } else if (window.polycrypt) {
-    sha1 = function sha1Polycrypt(content) {
-      return hexBytes(window.polycrypt.digest('SHA-1',
-        unescape(encodeURIComponent(content))));
-    };
-  } else {
-    sha1 = window.sha1;
-  }
+  return sha1 = f || hashblot.sha1 || window.sha1;
 }
 
 if(typeof module != "undefined") {

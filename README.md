@@ -43,31 +43,26 @@ This function applies `moveTo` and `quadraticCurveTo` operations for the given h
 
 These are versions of `hashblot.pd.q` and `hashblot.path2d.q` (respectively) that take a string, which is then converted to its SHA-1 hash and used with the corresponding function.
 
-See `hashblot.bindSha1` for how the SHA-1 hash is determined.
+When `module` is defined, this function will require and use the `crypto` module to produce the SHA-1 hash.
+
+Otherwise, it will use whatever "sha1" function is bound (see `hashblot.sha1` below).
 
 ### hashblot.bindSha1
 
-The SHA-1 function for `hashblot.sha1qpd` and `hashblot.sha1qpath2d` is bound when one of these functions is first called. It can be bound sooner by calling `hashblot.bindSha1`, with an optional argument containing the SHA-1 function to use.
+The SHA-1 function for `hashblot.sha1qpd` and `hashblot.sha1qpath2d` is bound to whatever value of `hashblot.sha1` is defined when one of these functions is first called.
 
-When `module` is defined, this function will require and use the `crypto` module to produce the SHA-1 hash.
+It can be bound sooner by calling `hashblot.bindSha1`, with an optional argument containing the SHA-1 function to use.
 
-Otherwise, it will try to use SHA-1 functions from the following projects, in order:
+In browser environments where there are multiple potential SHA-1 implementations available, you can use [any_sha1][] to automatically define the appropriate function to use:
 
-- [Rusha](https://github.com/srijs/rusha)
-- [Forge](https://github.com/digitalbazaar/forge#sha1)
-- [SJCL](https://github.com/bitwiseshiftleft/sjcl)
-- [jsSHA](https://github.com/Caligatio/jsSHA)
-- [Paul Johnston's hex_sha1 function](http://pajhome.org.uk/crypt/md5/)
-- [CryptoJS](https://code.google.com/p/crypto-js/)
-- [PolyCrypt](https://github.com/polycrypt/polycrypt)
+```
+hashblot.bindSha1(any_sha1.from(any_sha1.utf8.bytes));
+```
 
-(Pull requests to add more implementations are welcome.)
+You can also copy the appropriate function for your specific library (as this module's index.html does, for [Rusha][]).
 
-If none of these are present (and `hashblot.bindSha1` wasn't called with a function to use), it will use whatever the value of `window.sha1` is as a last resort.
-
-For SHA-1 functions that don't handle strings with character codes outside the 0-255 range (pretty much all of them), the string will first be converted to UTF-8 via the [unescape-encodeURIComponent method][1].
-
-[1]: http://ecmanaut.blogspot.com/2006/07/encoding-decoding-utf8-in-javascript.html
+[any_sha1]: https://github.com/stuartpb/any_sha1
+[Rusha]: https://github.com/srijs/rusha
 
 ## Usage
 

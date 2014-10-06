@@ -91,7 +91,14 @@ THE SOFTWARE.
         placeholder="Type some text here">
     </div>
     <script>
-      /*global hashblot*/
+      /*global hashblot Rusha*/
+
+      // Bind SHA-1 from Rusha
+      var rusha = new Rusha();
+      hashblot.bindSha1(function(content){
+        return Array.apply([], new Uint8Array(
+          rusha.rawDigest(unescape(encodeURIComponent(content))).buffer));
+      });
 
       function updateFromPhrase(phrase) {
         document.getElementById('blotpath').setAttribute('d',
