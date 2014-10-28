@@ -29,7 +29,7 @@ Takes an array of coordinates with a length divisible by 4 and converts it to an
 1. Prefix the entire string with 'M' + the last two numbers, denoting that the 'pen' should be moved to the last position in the shape before drawing the curves, so it will finish as a closed path where it started.
 2. Append "Q", followed by all the passed-in coordinates separated by commas, to denote a series of absolute-positioned quadratic Bézier curves, with each even pair of numbers as the X and Y coordinates of the control point, and each odd pair of numbers as the X and Y coordinates of the end point.
 
-This function is meant to be used with an array of bytes returned from a hash function. For scenarios where you only have a hexidecimal string, you can use `hashblot.hexBytes` to convert a hexadecimal string to an array of bytes.
+This function is meant to be used with an array of bytes returned from a hash function. For scenarios where you only have a hexadecimal string, you can use `hashblot.hexBytes` to convert a hexadecimal string to an array of bytes.
 
 ### hashblot.path2d.q
 
