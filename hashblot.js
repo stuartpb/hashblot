@@ -30,7 +30,7 @@ function hexBytes(s) {
   var l = s.length / 2;
   var a = new Array(l);
   for (var i = 0; i < l; ++i) {
-    a[i] = parseInt(s.slice(i*2, 2), 16);
+    a[i] = parseInt(s.slice(i*2, (i*2)+2), 16);
   }
   return a;
 }
