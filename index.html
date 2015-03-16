@@ -84,7 +84,8 @@ THE SOFTWARE.
     </div>
     <div>
       <a href="" id="self-link">Link</a>
-      <a href="" id="png-link">PNG image</a>
+      <a href="" id="png-link">PNG</a>
+      <a href="" id="hash-link">(hash)</a>
     </div>
     <div>
       <input id="entryfield" type="text" autofocus
@@ -95,23 +96,34 @@ THE SOFTWARE.
 
       // Bind SHA-1 from Rusha
       var rusha = new Rusha();
-      hashblot.bindSha1(function(content){
-        return Array.apply([], new Uint8Array(
-          rusha.rawDigest(unescape(encodeURIComponent(content))).buffer));
-      });
+
+      // Creates an array of bytes from rusha's rawDigest's Int32Array.
+      function sha1Bytes(str) {
+        return Array.apply([], new Uint8Array(rusha.rawDigest(str).buffer));
+      }
 
       function updateFromPhrase(phrase) {
+        // convert phrase to UTF-8
+        phrase = unescape(encodeURIComponent(phrase));
+
         document.getElementById('blotpath').setAttribute('d',
-        phrase ? hashblot.sha1qpd(phrase) : 'M 0 0');
+          phrase ? hashblot.pd.q(sha1Bytes(phrase)) : 'M 0 0');
         document.getElementById('self-link').href = phrase ?
           '#!' + encodeURIComponent(phrase) : '';
         document.getElementById('png-link').href =
-          '//images.hashblot.com/sha1/q/800/'
+          'https://images.hashblot.com/sha1/q/800/'
             + encodeURIComponent(phrase) + '.png';
+        document.getElementById('hash-link').href =
+          'https://images.hashblot.com/hex/q/800/'
+            + encodeURIComponent(rusha.digest(phrase)) + '.png';
+      }
+
+      function updateFromEventTargetValue(evt) {
+        return updateFromPhrase(evt.target.value);
       }
 
       document.getElementById('entryfield').addEventListener('input',
-        function(evt){updateFromPhrase(evt.target.value)});
+        updateFromEventTargetValue);
 
       // Sets the page's phrase to either a stashed state (from a pre-updated
       // page state), or the phrase specified by the page's hashbang (or, if
