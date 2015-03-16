@@ -1,6 +1,6 @@
 {
   "name": "hashblot",
-  "version": "0.2.0",
+  "version": "0.4.3",
   "description": "Functions for hash visualization.",
   "main": "hashblot.js",
   "scripts": {
