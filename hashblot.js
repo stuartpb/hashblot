@@ -54,8 +54,6 @@ if(typeof module != "undefined") {
   };
 }
 
-function pH(s){return parseInt(s,16)}
-
 function qpd (hash) {
   if(typeof hash.join != "function" || hash.length === undefined)
     throw new Error("input must be an array of values");
