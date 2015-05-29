@@ -84,8 +84,7 @@ THE SOFTWARE.
     </div>
     <div>
       <a href="" id="self-link">Link</a>
-      <a href="" id="png-link">PNG</a>
-      <a href="" id="hash-link">(hash)</a>
+      <a href="https://images.hashblot.com/hex/q/800/da39a3ee5e6b4b0d3255bfef95601890afd80709.png" id="png-link">PNG</a>
     </div>
     <div>
       <input id="entryfield" type="text" autofocus
@@ -111,9 +110,6 @@ THE SOFTWARE.
         document.getElementById('self-link').href = phrase ?
           '#!' + encodeURIComponent(phrase) : '';
         document.getElementById('png-link').href =
-          'https://images.hashblot.com/sha1/q/800/'
-            + encodeURIComponent(phrase) + '.png';
-        document.getElementById('hash-link').href =
           'https://images.hashblot.com/hex/q/800/'
             + encodeURIComponent(rusha.digest(phrase)) + '.png';
       }
