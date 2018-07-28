@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<!--
+http://hashblot.com/rainblot.html Copyright (c) Stuart P. Bentley
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+    <title>hashblot</title>
+    <script src="hashblot.js"></script>
+    <link href="images/favicon.png" sizes="16x16" rel="icon" type="image/png">
+    <link href="images/favicon@2x.png" sizes="32x32" rel="icon" type="image/png">
+    <link href="images/favicon@4x.png" sizes="64x64" rel="icon" type="image/png">
+    <link href="//fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet" type="text/css">
+    <style>
+      html, body {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        text-align: center;
+        font-family: sans-serif;
+      }
+      header {
+        width: 60%;
+        padding: 2vh 0 0;
+        margin: 0 auto;
+        text-align: left;
+        position: relative;
+      }
+      h1 {
+        font-size: 5vh;
+        font-family: Abril Fatface, sans-serif;
+        font-weight: normal;
+        margin:0;
+      }
+      #blotout {
+        height: 60vmin;
+        width: 60vmin;
+        margin: 5vh auto 2.5vh;
+        box-shadow: 1px 1px 5px 1px rgba(0,0,0,.25);
+        fill-rule: nonzero;
+        background-color: white;
+      }
+      #entryfield {
+        width: 60%;
+        font-size: 5vh;
+        margin: 2.5vh auto 0;
+      }
+      #aboutlink {
+        position: absolute;
+        font-size: 4vh;
+        top: 25%;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="https://github.com/stuartpb/hashblot/wiki/About"
+        id="aboutlink">About</a>
+      <h1>hashblot</h1>
+    </header>
+    <div class="ornateframe">
+      <svg id="blotout" viewBox="0 0 255 255">
+        <defs>
+          <filter id="blendmode">
+            <feBlend mode="multiply" in="BackgroundImage" />
+          </filter>
+          <linearGradient id="gradient-r" x1="0" x2="255" y1="0" y2="255" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" id="gradient-start-r" stop-color="hsl(0,100%,50%)" stop-opacity="1"/>
+            <stop offset="100%" id="gradient-finish-r" stop-color="hsl(0,100%,50%)" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="gradient-g" x1="0" x2="255" y1="255" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" id="gradient-start-g" stop-color="hsl(120,100%,50%)" stop-opacity="1"/>
+            <stop offset="100%" id="gradient-finish-g" stop-color="hsl(120,100%,50%)" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="gradient-b" x1="0" x2="255" y1="255" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" id="gradient-start-b" stop-color="hsl(240,100%,50%)" stop-opacity="1"/>
+            <stop offset="100%" id="gradient-finish-b" stop-color="hsl(240,100%,50%)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path id="blotpath-r" fill="url('#gradient-r')" filter="url('#blendmode')"></path>
+        <path id="blotpath-g" fill="url('#gradient-g')" filter="url('#blendmode')"></path>
+        <path id="blotpath-b" fill="url('#gradient-b')" filter="url('#blendmode')"></path>
+      </svg>
+    </div>
+    <script>
+      /*global hashblot crypto*/
+
+      function sampleBytes() {
+        return Array.apply([], crypto.getRandomValues(new Uint8Array(256)));
+      }
+
+      function updateFromBytes(bytes) {
+        var channels = ['r', 'g', 'b'];
+        var lastByte = bytes[63];
+        for (var i = 0; i < 3; ++i) {
+          var c = channels[i];
+          var hueByte = bytes[60+i];
+          var hue = -60+i*120 + Math.round(hueByte/255*120);
+          var hsl = 'hsl('+hue+',100%,50%)';
+          var blotpath = document.getElementById('blotpath-'+c);
+          var gradient = document.getElementById('gradient-'+c);
+          var gradStart = document.getElementById('gradient-start-'+c);
+          var gradFinish = document.getElementById('gradient-finish-'+c);
+          var ltr = lastByte & (128 >> i*2);
+          var ttb = lastByte & (64 >> i*2);
+
+          blotpath.setAttribute('d', hashblot.pd.q(
+            bytes.slice(i*20, (i+1)*20)));
+          gradient.setAttribute('x1', ltr ? 0 : 255);
+          gradient.setAttribute('x2', ltr ? 255 : 0);
+          gradient.setAttribute('y1', ttb ? 0 : 255);
+          gradient.setAttribute('y2', ttb ? 255 : 0);
+          gradStart.setAttribute('stop-color', hsl);
+          gradFinish.setAttribute('stop-color', hsl);
+        }
+      }
+      updateFromBytes(sampleBytes());
+    </script>
+  </body>
+</html>
